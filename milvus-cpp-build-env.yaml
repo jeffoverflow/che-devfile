@@ -23,16 +23,10 @@ objects:
       spec:
         containers:
         - image: "${MILVUS_BUILD_ENV_IMAGE}"
-          command: ['tail', '-f', '/dev/null']
           name: milvus-cpp
           volumeMounts:
            - mountPath: /projects
              name: projects
-          tty: true
-          stdin: true
-          env:
-          - name: SHELL
-            value: "/bin/bash"
         volumes:
          - name: projects
            persistentVolumeClaim:
@@ -50,4 +44,5 @@ objects:
         storage: 20Gi
 parameters:
 - name: MILVUS_BUILD_ENV_IMAGE
-  value: "milvusdb/milvus-dev:amd64-centos-7-core"
+  value: "jeff1020/milvus-dev:amd64-centos-7-core"
+
