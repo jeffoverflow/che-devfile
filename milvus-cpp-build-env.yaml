@@ -24,13 +24,15 @@ objects:
         containers:
         - image: "${MILVUS_BUILD_ENV_IMAGE}"
           command: ['tail', '-f', '/dev/null']
-          args: []
           name: milvus-cpp
           volumeMounts:
            - mountPath: /projects
              name: projects
           tty: true
           stdin: true
+          env:
+          - name: SHELL
+            value: "/bin/bash"
         volumes:
          - name: projects
            persistentVolumeClaim:
