@@ -1,0 +1,29 @@
+metadata:
+  name: milvus-cpp
+projects:
+  - name: milvus-cpp
+    source:
+      location: 'https://github.com/milvus-io/milvus'
+      type: git
+      branch: master
+components:
+  - id: che-incubator/cpptools/latest
+    preferences:
+      clangd.path: /usr/bin/clangd
+      cdt.clangd.binaries.enable: false
+    type: chePlugin
+    alias: cpp-plugin
+  - mountSources: true
+    type: kubernetes
+    reference: >-
+      https://raw.githubusercontent.com/jeffoverflow/che-devfile/master/milvus-cpp-build-env.yaml
+    alias: milvus-cpp-dev
+apiVersion: 1.0.0
+commands:
+  - name: build
+    actions:
+      - workdir: '${CHE_PROJECTS_ROOT}/milvus-cpp/ci/scripts'
+        type: exec
+        command: /bin/bash -l -c "./build.sh -t Debug -j1 -u" && echo "Build complete"
+        component: milvus-cpp-dev
+
