@@ -1,0 +1,39 @@
+---
+kind: Template
+apiVersion: v1
+metadata:
+  name: milvus-cpp-gpu-build-env
+objects:
+-
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: milvus-cpp-gpu-build-env
+    labels:
+      app: milvus-cpp-gpu-build-env
+  spec:
+    replicas: 1
+    selector:
+      name: milvus-cpp-gpu-build-env
+    template:
+      metadata:
+        labels:
+          app: milvus-cpp-gpu-build-env
+        name: milvus-cpp-gpu-build-env
+      spec:
+        containers:
+        - image: "${MILVUS_BUILD_ENV_IMAGE}"
+          name: milvus-cpp-gpu
+          resources:
+            limits:
+              memory: "16Gi"
+              cpu: "6.0"
+              # nvidia.com/gpu: 1
+              aliyun.com/gpu-mem: 5 # GiB
+            requests:
+              memory: "8Gi"
+              cpu: "4.0"
+parameters:
+- name: MILVUS_BUILD_ENV_IMAGE
+  value: "jeff1020/milvus-dev:amd64-centos-7-cuda-core"
+
